@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  frontend:
+    container_name: frontend-nuxt-3
+    build: ./.docker/.
+    working_dir: /nuxt
+    volumes:
+      - ./nuxt3-typescript:/nuxt
+    tty: true
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      CHOKIDAR_USEPOLLING: true
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      DATABASE_URL: ${DATABASE_URL}
+    ports:
+      - "3000:3000"
+      - "24679:24679"
+  db:
+    container_name: db-nuxt-3
+    image: mysql:8.3
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - volume-data:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_USER: ${DB_USER}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    healthcheck:
+      test: "exit 0"
+  phpmyadmin:
+    container_name: phpmyadmin-nuxt-3
+    image: phpmyadmin:5.2.1-apache
+    platform: linux/x86_64
+    depends_on:
+      - db
+    ports:
+      - "8082:80"
+    environment:
+      PMA_USER: ${DB_USER}
+      PMA_PASSWORD: ${DB_PASSWORD}
+      UPLOAD_LIMIT: 300M
+volumes:
+  volume-data:
