@@ -12,12 +12,16 @@
           {{ $t("login.email") }}
         </label>
         <InputText
-          type="email"
           v-model="email"
+          type="email"
           class="w-full"
           :invalid="errors.email"
         />
-        <small id="username-help" class="text-red-500" v-if="errors.email">
+        <small
+          v-if="errors.email"
+          id="username-help"
+          class="text-red-500"
+        >
           {{ $t("login.invalid.email") }}
         </small>
       </div>
@@ -29,12 +33,16 @@
           {{ $t("login.password") }}
         </label>
         <InputText
-          type="password"
           v-model="password"
+          type="password"
           class="w-full"
           :invalid="errors.password"
         />
-        <small id="username-help" class="text-red-500" v-if="errors.password">
+        <small
+          v-if="errors.password"
+          id="username-help"
+          class="text-red-500"
+        >
           {{ $t("login.invalid.password") }}
         </small>
         <!-- <a
@@ -56,8 +64,8 @@
       <Button
         :loading="loading"
         :label="$t('login.title')"
-        @click="signInWithCredentials"
         class="w-full"
+        @click="signInWithCredentials"
       />
     </form>
   </div>
@@ -65,13 +73,13 @@
 
 <script setup>
 definePageMeta({
-  layout: "login",
+  layout: 'login',
   auth: {
     unauthenticatedOnly: true,
   },
 });
-const email = ref("");
-const password = ref("");
+const email = ref('');
+const password = ref('');
 const loading = ref(false);
 
 const errors = ref({
@@ -80,9 +88,9 @@ const errors = ref({
 });
 
 const localePath = useLocalePath();
-const {signIn} = useAuth();
+const { signIn } = useAuth();
 const toast = useToast();
-const {t} = useI18n();
+const { t } = useI18n();
 
 async function signInWithCredentials() {
   errors.value.email = false;
@@ -93,7 +101,8 @@ async function signInWithCredentials() {
   try {
     if (!email.value) {
       errors.value.email = true;
-    } else {
+    }
+    else {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!regex.test(email.value)) {
         errors.value.email = true;
@@ -112,16 +121,18 @@ async function signInWithCredentials() {
       password: password.value,
     };
 
-    await signIn(credentials, {callbackUrl: localePath("/protected")});
-  } catch (error) {
-    const message = t(error.statusMessage) ?? t("api.CodeError.500");
+    await signIn(credentials, { callbackUrl: localePath('/protected') });
+  }
+  catch (error) {
+    const message = t(error.statusMessage) ?? t('api.CodeError.500');
     toast.add({
-      severity: "error",
-      summary: t("toast.error"),
+      severity: 'error',
+      summary: t('toast.error'),
       detail: message,
       life: 3000,
     });
-  } finally {
+  }
+  finally {
     loading.value = false;
   }
 }

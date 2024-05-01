@@ -1,16 +1,16 @@
-import * as bcrypt from "bcrypt";
-import {getUserByEmail, createUser} from "../../data/users.js";
+import * as bcrypt from 'bcrypt';
+import { getUserByEmail, createUser } from '../../data/users.js';
 
-export const SECRET = "dummy";
+export const SECRET = 'dummy';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const {email, password} = body;
+  const { email, password } = body;
 
   if (!email || !password) {
     throw createError({
       statusCode: 400,
-      statusMessage: "api.error.emailAndPasswordRequired",
+      statusMessage: 'api.error.emailAndPasswordRequired',
     });
   }
 
@@ -26,10 +26,11 @@ export default defineEventHandler(async (event) => {
 
     const newUser = await createUser(user);
     return newUser;
-  } else {
+  }
+  else {
     throw createError({
       statusCode: 403,
-      statusMessage: "api.error.userAlreadyExists",
+      statusMessage: 'api.error.userAlreadyExists',
     });
   }
 });

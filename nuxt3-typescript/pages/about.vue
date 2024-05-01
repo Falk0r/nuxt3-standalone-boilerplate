@@ -4,8 +4,10 @@
     <p>{{ message }}</p>
     <h2>{{ $t("welcome") }}</h2>
     <div>
-      <br />
-      <NuxtLink :to="localePath('/')">{{ $t("home") }}</NuxtLink>
+      <br>
+      <NuxtLink :to="localePath('/')">
+        {{ $t("home") }}
+      </NuxtLink>
     </div>
     <div class="card flex justify-center">
       <I18nSwitchLang />
@@ -15,12 +17,12 @@
 
 <script setup lang="ts">
 definePageMeta({
-  layout: "applications",
+  layout: 'applications',
   auth: false,
 });
 const localePath = useLocalePath();
 
-const message = ref("This is the about page of our application.");
+const message = ref('This is the about page of our application.');
 </script>
 
 <style scoped>

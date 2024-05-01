@@ -9,7 +9,7 @@
           class="rounded-t-lg sm:m-h-64 md:h-64 w-full"
           src="https://cordis.europa.eu/docs/results/images/2020-05/417980.jpg"
           alt=""
-        />
+        >
       </div>
 
       <div class="p-4 dark:bg-gray-200">
@@ -20,10 +20,13 @@
           <Button
             :label="$t('login.signOut')"
             severity="danger"
-            @click="signOut({callbackUrl: '/'})"
+            @click="signOut({ callbackUrl: '/' })"
           />
           <NuxtLink :to="localePath('/')">
-            <Button severity="secondary" :label="$t('home')" />
+            <Button
+              severity="secondary"
+              :label="$t('home')"
+            />
           </NuxtLink>
         </div>
       </div>
@@ -32,10 +35,10 @@
 </template>
 
 <script setup lang="ts">
-const {signOut} = useAuth();
+const { signOut } = useAuth();
 const localePath = useLocalePath();
 definePageMeta({
-  layout: "applications",
-  middleware: "auth",
+  layout: 'applications',
+  middleware: 'auth',
 });
 </script>

@@ -2,7 +2,7 @@
   <Dropdown
     v-model="selectedCountry"
     :options="locales"
-    optionLabel="name"
+    option-label="name"
     placeholder="Select a Country"
     class="w-full md:w-[14rem]"
     @change="switchLocalCountry"
@@ -11,15 +11,15 @@
 
 <script setup lang="ts">
 const switchLocalePath = useSwitchLocalePath();
-const {locale, locales} = useI18n();
+const { locale, locales } = useI18n();
 
 const selectedCountry = ref(getLocalCountry());
 
 function getLocalCountry() {
-  return locales.value.find((country) => country.code === locale.value);
+  return locales.value.find(country => country.code === locale.value);
 }
 
-function switchLocalCountry(country: {value: {code: string}}) {
+function switchLocalCountry(country: { value: { code: string } }) {
   navigateTo(switchLocalePath(country.value.code));
 }
 </script>
