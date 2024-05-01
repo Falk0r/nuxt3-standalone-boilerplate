@@ -4,35 +4,52 @@
       {{ $t("register.title") }}
     </h2>
 
-    <form action="#" method="POST">
+    <form
+      action="#"
+      method="POST"
+    >
       <!-- Adresse email -->
       <div class="mt-4">
-        <label for="email" class="block text-sm font-medium text-gray-700">
+        <label
+          for="email"
+          class="block text-sm font-medium text-gray-700"
+        >
           {{ $t("register.email") }}
         </label>
         <InputText
-          type="email"
           v-model="email"
+          type="email"
           class="w-full"
           :invalid="errors.email"
         />
-        <small id="username-help" class="text-red-500" v-if="errors.email">
+        <small
+          v-if="errors.email"
+          id="username-help"
+          class="text-red-500"
+        >
           {{ $t("register.invalid.email") }}
         </small>
       </div>
 
       <!-- Mot de passe -->
       <div class="mt-4">
-        <label for="password" class="block text-sm font-medium text-gray-700">
+        <label
+          for="password"
+          class="block text-sm font-medium text-gray-700"
+        >
           {{ $t("register.password") }}
         </label>
         <InputText
-          type="password"
           v-model="password"
+          type="password"
           class="w-full"
           :invalid="errors.password"
         />
-        <small id="username-help" class="text-red-500" v-if="errors.password">
+        <small
+          v-if="errors.password"
+          id="username-help"
+          class="text-red-500"
+        >
           {{ $t("register.invalid.password") }}
         </small>
       </div>
@@ -51,8 +68,8 @@
         <Button
           :loading="loading"
           :label="$t('register.submit')"
-          @click.prevent="registerWithCredentials()"
           class="w-full"
+          @click.prevent="registerWithCredentials()"
         />
       </div>
     </form>
@@ -61,14 +78,14 @@
 
 <script setup>
 definePageMeta({
-  layout: "login",
+  layout: 'login',
   auth: {
     unauthenticatedOnly: true,
-    navigateAuthenticatedTo: "/",
+    navigateAuthenticatedTo: '/',
   },
 });
-const email = ref("");
-const password = ref("");
+const email = ref('');
+const password = ref('');
 const loading = ref(false);
 
 const errors = ref({
@@ -77,9 +94,9 @@ const errors = ref({
 });
 
 const localePath = useLocalePath();
-const {signUp} = useAuth();
+const { signUp } = useAuth();
 const toast = useToast();
-const {t} = useI18n();
+const { t } = useI18n();
 
 async function registerWithCredentials() {
   errors.value.email = false;
@@ -90,7 +107,8 @@ async function registerWithCredentials() {
   try {
     if (!email.value) {
       errors.value.email = true;
-    } else {
+    }
+    else {
       const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
       if (!regex.test(email.value)) {
         errors.value.email = true;
@@ -109,16 +127,18 @@ async function registerWithCredentials() {
       password: password.value,
     };
 
-    await signUp(credentials, {callbackUrl: localePath("/protected")});
-  } catch (error) {
-    const message = t(error.statusMessage) ?? t("api.CodeError.500");
+    await signUp(credentials, { callbackUrl: localePath('/protected') });
+  }
+  catch (error) {
+    const message = t(error.statusMessage) ?? t('api.CodeError.500');
     toast.add({
-      severity: "error",
-      summary: t("toast.error"),
+      severity: 'error',
+      summary: t('toast.error'),
       detail: message,
       life: 3000,
     });
-  } finally {
+  }
+  finally {
     loading.value = false;
   }
 }

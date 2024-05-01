@@ -1,15 +1,15 @@
-import * as bcrypt from "bcrypt";
-import jwt from "jsonwebtoken";
-import credentialValidation from "../../validation/validation";
-import {getUserByEmail} from "../../data/users";
-import {createError} from "h3";
+import * as bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { createError } from 'h3';
+import credentialValidation from '../../validation/validation';
+import { getUserByEmail } from '../../data/users';
 
-const refreshTokens: Record<number, Record<string, any>> = {};
-export const SECRET = "dummy";
+const refreshTokens: Record<number, Record<string, unknown>> = {};
+export const SECRET = 'dummy';
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const {email, password} = body;
+  const { email, password } = body;
 
   await credentialValidation(email, password);
 
@@ -18,15 +18,15 @@ export default defineEventHandler(async (event) => {
   if (!user) {
     throw createError({
       statusCode: 404,
-      statusMessage: "api.error.userNotFound",
+      statusMessage: 'api.error.userNotFound',
     });
   }
   const isMatch = await bcrypt.compare(password, user?.password);
 
   if (isMatch) {
-    const refreshToken =
-      Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1;
-    const accessToken = jwt.sign({email}, SECRET, {expiresIn: 3600});
+    const refreshToken
+      = Math.floor(Math.random() * (1000000000000000 - 1 + 1)) + 1;
+    const accessToken = jwt.sign({ email }, SECRET, { expiresIn: 3600 });
     refreshTokens[refreshToken] = {
       accessToken,
       user,
@@ -38,10 +38,11 @@ export default defineEventHandler(async (event) => {
         refreshToken,
       },
     };
-  } else {
+  }
+  else {
     throw createError({
       statusCode: 403,
-      statusMessage: "api.error.wrongPassword",
+      statusMessage: 'api.error.wrongPassword',
     });
   }
 });

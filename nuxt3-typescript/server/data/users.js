@@ -1,4 +1,4 @@
-import prisma from "./prisma";
+import prisma from './prisma';
 
 export async function getUserByEmail(email) {
   const user = await prisma.user.findUnique({
@@ -10,7 +10,6 @@ export async function getUserByEmail(email) {
 }
 
 export async function createUser(data) {
-  const {email, password} = data;
   const user = await prisma.user.create({
     data,
   });

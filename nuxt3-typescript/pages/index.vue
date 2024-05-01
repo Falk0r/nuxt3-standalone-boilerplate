@@ -48,13 +48,20 @@
         >
           <div class="text-center py-4 space-x-4">
             <NuxtLink :to="localePath('/login')">
-              <Button label="Primary" rounded @click="">
+              <Button
+                label="Primary"
+                rounded
+              >
                 {{ $t("login.title") }}
               </Button>
             </NuxtLink>
 
             <NuxtLink :to="localePath('/protected')">
-              <Button label="Protected" severity="secondary" rounded />
+              <Button
+                label="Protected"
+                severity="secondary"
+                rounded
+              />
             </NuxtLink>
           </div>
         </div>
@@ -105,7 +112,7 @@
                     class="object-cover rounded-3xl object-center w-full mx-auto bg-gray-300 lg:ml-auto"
                     alt="hero"
                     src="https://i.pinimg.com/originals/2e/2b/21/2e2b21aeed393403d4620367f9e093f9.gif"
-                  />
+                  >
                 </div>
               </div>
             </div>
@@ -115,10 +122,12 @@
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
-import Button from "primevue/button";
+import Button from 'primevue/button';
+
 definePageMeta({
-  layout: "applications",
+  layout: 'applications',
   auth: false,
 });
 const localePath = useLocalePath();
